@@ -1,0 +1,29 @@
+{
+  "dependencies": [
+    {
+      "name": "pyyaml",
+      "version": "5.3.1",
+      "vulns": [
+        {
+          "id": "CVE-2020-14343",
+          "fix_versions": ["5.4"],
+          "aliases": [],
+          "description": "PyYAML before 5.4 is vulnerable to arbitrary code execution when processing untrusted YAML files through full_load or the FullLoader."
+        }
+      ]
+    },
+    {
+      "name": "requests",
+      "version": "2.25.0",
+      "vulns": [
+        {
+          "id": "GHSA-j8r2-6x86-q33q",
+          "fix_versions": ["2.31.0"],
+          "aliases": ["CVE-2023-32681"],
+          "description": "Requests can leak Proxy-Authorization headers to destination servers when redirected to an HTTPS endpoint."
+        }
+      ]
+    }
+  ],
+  "fixes": []
+}

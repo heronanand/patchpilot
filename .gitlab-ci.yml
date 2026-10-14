@@ -1,0 +1,30 @@
+# PatchPilot's own CI, plus a merge-request job that runs PatchPilot on the demo app.
+stages: [test, security]
+
+default:
+  image: python:3.12-slim
+
+test:
+  stage: test
+  script:
+    - pip install -e ".[dev]"
+    - pytest -q
+
+patchpilot-demo:
+  stage: security
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  script:
+    - pip install -e ".[llm]"
+    # In a real project, generate these reports in earlier jobs:
+    #   npm audit --json > npm-audit.json; pip-audit -f json -o pip-audit.json; semgrep --json -o semgrep.json
+    - >
+      patchpilot --repo examples/demo-app
+      --npm-audit examples/demo-app/reports/npm-audit.json
+      --pip-audit examples/demo-app/reports/pip-audit.json
+      --semgrep examples/demo-app/reports/semgrep.json
+      --llm --report patchpilot-report.md --json patchpilot-report.json
+      --post-note
+  artifacts:
+    when: always
+    paths: [patchpilot-report.md, patchpilot-report.json]

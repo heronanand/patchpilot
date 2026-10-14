@@ -1,0 +1,45 @@
+{
+  "version": "1.86.0",
+  "results": [
+    {
+      "check_id": "python.lang.security.deserialization.avoid-pyyaml-load.avoid-pyyaml-load",
+      "path": "app.py",
+      "start": {
+        "line": 8,
+        "col": 12,
+        "offset": 152
+      },
+      "end": {
+        "line": 8,
+        "col": 26,
+        "offset": 166
+      },
+      "extra": {
+        "message": "Detected a possible YAML deserialization vulnerability. `yaml.load` can create arbitrary Python objects from untrusted input. Use `yaml.safe_load` instead.",
+        "severity": "ERROR",
+        "fix": "yaml.safe_load(raw)",
+        "lines": "    return yaml.load(raw)"
+      }
+    },
+    {
+      "check_id": "python.lang.security.audit.formatted-sql-query.formatted-sql-query",
+      "path": "app.py",
+      "start": {
+        "line": 13,
+        "col": 5,
+        "offset": 252
+      },
+      "end": {
+        "line": 13,
+        "col": 74,
+        "offset": 321
+      },
+      "extra": {
+        "message": "Detected possible formatted SQL query. Use parameterized queries instead.",
+        "severity": "WARNING",
+        "lines": "    cursor.execute(\"SELECT id, name FROM users WHERE name = '%s'\" % name)"
+      }
+    }
+  ],
+  "errors": []
+}
